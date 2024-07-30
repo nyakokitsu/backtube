@@ -38,5 +38,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: exe
-          path: build/index.exe
+          name: ${{ runner.os }} Build
+          path: |
+            build/*.exe
+            build/*.bin
