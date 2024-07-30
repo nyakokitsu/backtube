@@ -12,6 +12,7 @@ import zipfile
 import tarfile
 import os
 
+
 async def main():
     """
     This is some cringy code plz do not read.
@@ -22,25 +23,26 @@ async def main():
 
     os_type = platform.system()
     print("nyako's byeDPI installer")
-    print("MAKE YOUTUBE GREAT AGAIN!")
+    print("MAKE YOUTUBE GREAT AGAIN!\n")
     print(f"Latest version of byeDPI: {latest_tag}")
     print(f"Platform: {os_type}")
     if os_type == "Windows":
         fetch_file(f"https://github.com/hufrea/byedpi/releases/download/{latest_tag}/byedpi-12-x86_64-w64.zip", True)
-        with zipfile.ZipFile("byedpi.zip") as z:
+        with zipfile.ZipFile("byedpi.zip", 'r') as z:
             with z.open('ciadpi.exe') as zf, open('./ciadpi.exe', 'wb') as f:
                 shutil.copyfileobj(zf, f)
-        z.close()
-        os.remove("byedpi.zip")
+        if os.path.exists("byedpi.zip"):
+            os.remove("byedpi.zip")
     elif os_type == "Linux":
         fetch_file(f"https://github.com/hufrea/byedpi/releases/download/{latest_tag}/byedpi-12-x86_64.tar.gz", False)
-        tar = tarfile.open("byedpi.tar.gz")
-        tar.extract('ciadpi-x86_64')
-        tar.close()
-        os.remove("byedpi.tar.gz")
-        os.rename('ciadpi-x86_64', 'ciadpi')
+        with tarfile.open("byedpi.tar.gz", 'r:gz') as tar:
+            tar.extract('ciadpi-x86_64')
+        if os.path.exists("byedpi.tar.gz"):
+            os.remove("byedpi.tar.gz")
+        if os.path.exists('ciadpi-x86_64'):
+            os.rename('ciadpi-x86_64', 'ciadpi')
     print("File extracted!")
-    
+
 def fetch_file(URL: str, is_win: bool):
     try:
         response = requests.get(URL)
