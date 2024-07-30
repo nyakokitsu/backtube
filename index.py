@@ -42,13 +42,15 @@ async def main():
         if os.path.exists('ciadpi-x86_64'):
             os.rename('ciadpi-x86_64', 'ciadpi')
     print("File extracted!")
+    print("Setting some variables...")
+    # Set startup.
     if os_type == "Windows":
         win_strategy()
     elif os_type == "Linux":
         linux_strategy()
 
 def linux_strategy():
-    pass
+    print("Service configuration not realized =( \ntodo ;)\nyou can run exec in screen")
 
 def win_move():
     user_dir = pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI"
