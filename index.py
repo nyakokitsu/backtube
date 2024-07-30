@@ -62,10 +62,10 @@ def win_strategy():
     user_dir = pathlib.Path.home() / "AppData" / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Startup"
     cia_path = pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI" / "ciadpi.exe"
     with open(user_dir / "dpi.bat", "w") as bat_file:
-        bat_file.write(f"start \"\" \"{cia_path}\"")
+        bat_file.write(f"start \"\" \"{cia_path} -i 127.0.0.1 -p 10801 -d 1\"")
     os.system("netsh winhttp set proxy socks5://127.0.0.1:10801")
     print('Successfully added proxy! Running ciadpi...')
-    os.system(cia_path)
+    os.system(f"{cia_path} -i 127.0.0.1 -p 10801 -d 1")
 
 
 
