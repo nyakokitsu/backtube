@@ -1,0 +1,6 @@
+httpx
+asyncio
+platform
+zipfile
+tarfile
+os
