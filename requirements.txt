@@ -4,3 +4,4 @@ platform
 zipfile
 tarfile
 os
+requests

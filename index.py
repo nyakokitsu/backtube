@@ -4,7 +4,6 @@
 
 
 import requests
-import httpx
 import asyncio
 import platform
 import shutil
@@ -18,7 +17,7 @@ async def main():
     This is some cringy code plz do not read.
     """
     # Okay, let's get actual version of byedpi
-    res = httpx.get("https://api.github.com/repos/hufrea/byedpi/releases/latest").json()
+    res = requests.get("https://api.github.com/repos/hufrea/byedpi/releases/latest").json()
     latest_tag = res['tag_name']
 
     os_type = platform.system()
