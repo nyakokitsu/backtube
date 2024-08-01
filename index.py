@@ -37,7 +37,7 @@ async def main():
         if uninstall_ask:
             os.remove("%appdata%\Roaming\byeDPI\ciadpi.exe")
             if (user_dir / "dpi.bat").exists():
-                os.remove(user_dir / "dpi.bat")
+                os.remove(str((user_dir / "dpi.bat").stem))
             print("Uninstallation complete!")
             input("Press Enter to exit.")
                 
@@ -73,18 +73,19 @@ def linux_strategy():
 def win_move():
     user_dir = pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI"
     if not user_dir.exists():
-        os.mkdir(user_dir)
-        shutil.copyfile("ciadpi.exe", pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI" / "ciadpi.exe")
+        os.mkdir(str(user_dir.stem))
+        shutil.copyfile("ciadpi.exe", str((pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI" / "ciadpi.exe").stem))
 
 def win_strategy():
     need_autostart = ask("Needed to add to autostart?")
     cia_path = pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI"
+    print(f"Configured ciadpi in {str(cia_path.stem)}")
     if need_autostart:
-        with open(user_dir / "dpi.bat", "w") as bat_file:
-            bat_file.write(f"cd {cia_path} && ciadpi.exe -i 127.0.0.1 -p 10801 -d 1")
+        with open(str((user_dir / "dpi.bat").stem), "w") as bat_file:
+            bat_file.write(f"cd {str(cia_path.stem)} && ciadpi.exe -i 127.0.0.1 -p 10801 -d 1")
     os.system("netsh winhttp set proxy socks5://127.0.0.1:10801")
-    print('Successfully added proxy! Running ciadpi...')
-    os.system(f"cd {cia_path} && ciadpi.exe -i 127.0.0.1 -p 10801 -d 1")
+    print('\nSuccessfully added proxy! \nYou can test youtube here -- https://youtu.be/bNvjrEoVoH0?t=57\n\nRunning ciadpi...')
+    os.system(f"cd {str(cia_path.stem)} && ciadpi.exe -i 127.0.0.1 -p 10801 -d 1")
 
 
 
