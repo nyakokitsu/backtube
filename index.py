@@ -12,7 +12,6 @@ import tarfile
 import os
 import pathlib
 import sys
-import pyuac
 
 user_dir = pathlib.Path.home() / "AppData" / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Startup" 
 
@@ -36,13 +35,11 @@ async def main():
     if is_installed:
         uninstall_ask = ask("Found installation, start uninstall?")
         if uninstall_ask:
-            if not pyuac.isUserAdmin():
-                pyuac.runAsAdmin()
-            else:
-                os.remove("%appdata%\Roaming\byeDPI\ciadpi.exe")
-                if (user_dir / "dpi.bat").exists():
-                    os.remove(user_dir / "dpi.bat")
-                print("Uninstallation complete!")
+            os.remove("%appdata%\Roaming\byeDPI\ciadpi.exe")
+            if (user_dir / "dpi.bat").exists():
+                os.remove(user_dir / "dpi.bat")
+            print("Uninstallation complete!")
+            input("Press Enter to exit.")
                 
 
     print(f"Latest version of byeDPI: {latest_tag}\n")
@@ -66,10 +63,7 @@ async def main():
     print("Setting some variables...")
     # Set startup.
     if os_type == "Windows":
-        if not pyuac.isUserAdmin():
-            pyuac.runAsAdmin()
-        else:
-            win_strategy()
+        win_strategy()
     elif os_type == "Linux":
         linux_strategy()
 
