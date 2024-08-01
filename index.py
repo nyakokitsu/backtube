@@ -55,12 +55,12 @@ def linux_strategy():
 def win_move():
     user_dir = pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI"
     if not user_dir.exists():
-        user_dir.mkdir(pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI")
+        os.mkdir(user_dir)
         shutil.copyfile("ciadpi.exe", pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI" / "ciadpi.exe")
 
 def win_strategy():
     user_dir = pathlib.Path.home() / "AppData" / "Roaming" / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Startup"
-    cia_path = pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI" / "ciadpi.exe"
+    cia_path = pathlib.Path.home() / "AppData" / "Roaming" / "byeDPI"
     with open(user_dir / "dpi.bat", "w") as bat_file:
         bat_file.write(f"cd {cia_path} && ciadpi.exe -i 127.0.0.1 -p 10801 -d 1")
     os.system("netsh winhttp set proxy socks5://127.0.0.1:10801")
